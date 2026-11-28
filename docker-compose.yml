@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:16
+    container_name: alcera-db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - alcera_data:/var/lib/postgresql/data
+      - ./server/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./server/database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql
+    restart: unless-stopped
+
+volumes:
+  alcera_data:
