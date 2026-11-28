@@ -10,6 +10,8 @@ services:
       - "${DB_PORT}:5432"
     volumes:
       - alcera_data:/var/lib/postgresql/data
+      - ./server/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./server/database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql
     restart: unless-stopped
 
 volumes:
